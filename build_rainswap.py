@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""RE4R 湿身换贴图 - 配置生成器 | Author: NyaSita"""
+"""RE4R 湿身换贴图 - 配置生成器 | 生成器作者: NyaSita"""
 
 import os
 from datetime import datetime
@@ -132,7 +132,7 @@ end)
 def main():
     print("=" * 56)
     print("  RE4R 湿身换贴图 - 配置生成器")
-    print("  Author: NyaSita")
+    print("  生成器作者: NyaSita")
     print("  路径需与 MDF 中填写的路径一致")
     print("  输入 cplt 结束并生成脚本")
     print("=" * 56)

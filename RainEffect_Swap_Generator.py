@@ -108,25 +108,6 @@ re.on_frame(function()
     ui.status = wet0 and string.format("湿身 替换:%d", swapped) or string.format("干燥 恢复:%d", swapped)
 end)
 
-re.on_draw_ui(function()
-    if imgui.begin_window("RainSwap") then
-        imgui.text("状态: " .. ui.status)
-        imgui.text(string.format("浸湿度: %.3f", ui.wet))
-        imgui.separator()
-        if #ui.loaded > 0 then
-            imgui.text_colored("Rain贴图:", 0xFF00FF00)
-            for _, l in ipairs(ui.loaded) do imgui.text("  " .. l) end
-        end
-        if #ui.failed > 0 then
-            imgui.text_colored("缺失:", 0xFF4444FF)
-            for _, f in ipairs(ui.failed) do imgui.text("  " .. f) end
-        end
-        if #ui.loaded == 0 and #ui.failed == 0 then
-            imgui.text_colored("等待场景加载...", 0xFF888888)
-        end
-        imgui.end_window()
-    end
-end)
 """
 
 def main():

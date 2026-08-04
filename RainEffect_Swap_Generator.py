@@ -19,6 +19,7 @@ local pending = {{}}
 local wet0 = false
 local ready = false
 local last_scene = nil
+local frame = 0
 
 local rain_cache = {{}}
 local targets = {{}}
@@ -49,12 +50,17 @@ re.on_frame(function()
         wm = sdk.get_managed_singleton("chainsaw.WeatherManager")
     end
 
+    frame = frame + 1
+
     -- 检测场景切换，自动重新预加载
     local sc = sdk.call_native_func(sm, sdk.find_type_definition("via.SceneManager"), "get_CurrentScene")
     if sc and last_scene and sc ~= last_scene then
         ready = false; rain_cache = {{}}; targets = {{}}; ui.loaded = {{}}; ui.failed = {{}}; ui.found = 0
     end
     if sc then last_scene = sc end
+
+    -- 没就绪时每 120 帧（约2秒）重试一次，给场景加载留时间
+    if not ready and frame % 120 ~= 1 then return end
 
     if not ready then
         if not sc then return end

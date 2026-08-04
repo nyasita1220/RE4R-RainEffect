@@ -92,8 +92,9 @@ re.on_frame(function()
         end
         ui.status = string.format("就绪: %d rain贴图, %d 目标, %d 缺失",
             #ui.loaded, ui.found, #ui.failed)
-        -- 没找到目标就不算就绪，持续重试
-        if #targets > 0 then ready = true; return end
+        -- 没找到目标就持续重试，找到了继续往下走（当帧就生效）
+        ready = #targets > 0
+        if not ready then return end
     end
 
     local wet = wm and (wm:get_field("_CurrentGlobalWetRate") or 0) or 0

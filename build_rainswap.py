@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""RE4R 湿身换贴图 - 配置生成器"""
+"""RE4R 湿身换贴图 - 配置生成器 | Author: NyaSita"""
 
 import os
 from datetime import datetime
 
 TEMPLATE = r"""--============================================================
 -- RE4R 湿身换贴图
+-- Author: NyaSita
 -- 生成时间: {time}
 --============================================================
 

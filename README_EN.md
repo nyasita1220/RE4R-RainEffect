@@ -1,5 +1,7 @@
 # RE4R Rain Texture Swap
 
+**English** | [中文](README.md)
+
 Auto texture swapping on wet state for Resident Evil 4 Remake.
 
 Detects wet state (rain/water/puddles) and automatically swaps specified textures to their wet versions, reverting when dry.

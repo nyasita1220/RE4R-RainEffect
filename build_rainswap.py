@@ -131,7 +131,8 @@ end)
 
 def main():
     print("=" * 56)
-    print("  RE4R 湿身换贴图 - 脚本生成器")
+    print("  RE4R 湿身换贴图 - 配置生成器")
+    print("  Author: NyaSita")
     print("  路径需与 MDF 中填写的路径一致")
     print("  输入 cplt 结束并生成脚本")
     print("=" * 56)

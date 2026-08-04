@@ -18,6 +18,7 @@ local wm, sm = nil, nil
 local pending = {{}}
 local wet0 = false
 local ready = false
+local last_scene = nil
 
 local rain_cache = {{}}
 local targets = {{}}
@@ -48,8 +49,14 @@ re.on_frame(function()
         wm = sdk.get_managed_singleton("chainsaw.WeatherManager")
     end
 
+    -- 检测场景切换，自动重新预加载
+    local sc = sdk.call_native_func(sm, sdk.find_type_definition("via.SceneManager"), "get_CurrentScene")
+    if sc and last_scene and sc ~= last_scene then
+        ready = false; rain_cache = {{}}; targets = {{}}; ui.loaded = {{}}; ui.failed = {{}}; ui.found = 0
+    end
+    if sc then last_scene = sc end
+
     if not ready then
-        local sc = sdk.call_native_func(sm, sdk.find_type_definition("via.SceneManager"), "get_CurrentScene")
         if not sc then return end
         local meshes = arr(sc:call("findComponents(System.Type)", sdk.typeof("via.render.Mesh")))
         local rain_set = {{}}; for _, p in ipairs(SWAP_LIST) do rain_set[p[2]] = true end

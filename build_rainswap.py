@@ -131,10 +131,37 @@ end)
 
 def main():
     print("=" * 56)
-    print("  RE4R 湿身换贴图 - 配置生成器")
-    print("  生成器作者: NyaSita")
-    print("  路径需与 MDF 中填写的路径一致")
-    print("  输入 cplt 结束并生成脚本")
+    print("  RE4R Rain Texture Swap - Config Generator")
+    print("  1) English    2) 中文")
+    lang = input("  Select language / 选择语言 (1/2): ").strip()
+    is_en = lang == "1"
+
+    T = {
+        "title": "RE4R Rain Texture Swap - Config Generator" if is_en else "RE4R 湿身换贴图 - 配置生成器",
+        "author": "Generator by: NyaSita" if is_en else "生成器作者: NyaSita",
+        "path_note": "Paths must match MDF references" if is_en else "路径需与 MDF 中填写的路径一致",
+        "end_hint": "Type cplt to finish" if is_en else "输入 cplt 结束并生成脚本",
+        "tex_orig": lambda n: f"Texture {n} - Original: " if is_en else f"法线{n} 原贴图: ",
+        "tex_rain": lambda n: f"Texture {n} - Wet: " if is_en else f"法线{n} 浸湿贴图: ",
+        "empty_err": "Path cannot be empty" if is_en else "路径不能为空",
+        "added": lambda o, r: f"  -> Added: {o}  =>  {r}" if is_en else f"  -> 已添加: {o}  =>  {r}",
+        "no_input": "No textures entered, exiting." if is_en else "未输入任何贴图，退出。",
+        "name_hint": "Suggested: ModName_rain_texture_swap" if is_en else "建议命名: mod名_rain_texture_swap",
+        "name_example": "e.g. XiShi_rain_texture_swap" if is_en else "例如: XiShi_rain_texture_swap",
+        "name_warn": "Use unique names to avoid mod conflicts" if is_en else "不同 mod 用不同名字，避免冲突",
+        "name_prompt": "Script filename (without .lua): " if is_en else "脚本文件名 (不含.lua): ",
+        "name_empty": "Cannot be empty" if is_en else "不能为空",
+        "name_ascii": "Only English letters and numbers, no spaces" if is_en else "只能用英文和数字，不能有空格",
+        "name_exists": lambda n: f"  {n}.lua already exists, pick another name" if is_en else f"  {n}.lua 已存在，换一个名字",
+        "done": lambda out, n: f"Generated: {out}\n  {n} texture pairs\n  Place in reframework/autorun/" if is_en else f"已生成: {out}\n  共 {n} 对贴图\n  放入 reframework/autorun/ 即可",
+        "cplt": "cplt",
+    }
+
+    print("=" * 56)
+    print(f"  {T['title']}")
+    print(f"  {T['author']}")
+    print(f"  {T['path_note']}")
+    print(f"  {T['end_hint']}")
     print("=" * 56)
     print()
 
@@ -142,47 +169,46 @@ def main():
     n = 1
 
     while True:
-        orig = input(f"法线{n} 原贴图: ").strip()
-        if orig.lower() == "cplt":
+        orig = input(T["tex_orig"](n)).strip()
+        if orig.lower() == T["cplt"]:
             break
         if not orig:
-            print("  路径不能为空")
+            print(f"  {T['empty_err']}")
             continue
 
-        rain = input(f"法线{n} 浸湿贴图: ").strip()
-        if rain.lower() == "cplt":
+        rain = input(T["tex_rain"](n)).strip()
+        if rain.lower() == T["cplt"]:
             break
         if not rain:
-            print("  路径不能为空")
+            print(f"  {T['empty_err']}")
             continue
 
         pairs.append((orig, rain))
-        print(f"  -> 已添加: {orig}  =>  {rain}")
+        print(T["added"](orig, rain))
         print()
         n += 1
 
     if not pairs:
-        print("未输入任何贴图，退出。")
+        print(T["no_input"])
         return
 
-    # 输入文件名
     print()
     print("-" * 56)
-    print("  建议命名: mod名_rain_texture_swap")
-    print("  例如: XiShi_rain_texture_swap")
-    print("  不同 mod 用不同名字，避免冲突")
+    print(f"  {T['name_hint']}")
+    print(f"  {T['name_example']}")
+    print(f"  {T['name_warn']}")
     print("-" * 56)
     while True:
-        name = input("脚本文件名 (不含.lua): ").strip()
+        name = input(T["name_prompt"]).strip()
         if not name:
-            print("  不能为空")
+            print(f"  {T['name_empty']}")
             continue
         if not name.isascii() or " " in name:
-            print("  只能用英文和数字，不能有空格")
+            print(f"  {T['name_ascii']}")
             continue
         out = os.path.join(os.path.dirname(os.path.abspath(__file__)), name + ".lua")
         if os.path.exists(out):
-            print(f"  {name}.lua 已存在，换一个名字")
+            print(T["name_exists"](name))
             continue
         break
 
@@ -199,9 +225,7 @@ def main():
 
     print()
     print("=" * 56)
-    print(f"  已生成: {out}")
-    print(f"  共 {len(pairs)} 对贴图")
-    print(f"  放入 reframework/autorun/ 即可")
+    print(T["done"](out, len(pairs)))
     print("=" * 56)
 
 if __name__ == "__main__":

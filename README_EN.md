@@ -29,10 +29,10 @@ How to do this:
 
 ### 2. Generate the Script
 
-Run the config generator and follow the prompts:
+Run the config generator `RainEffect_Sawp_Generator.py` and follow the prompts:
 
 ```bash
-python build_rainswap.py
+python RainEffect_Sawp_Generator.py
 ```
 
 ### 3. Bundle with your Mod

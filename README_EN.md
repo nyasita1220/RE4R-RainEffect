@@ -6,6 +6,8 @@ Auto texture swapping on wet state for Resident Evil 4 Remake.
 
 Detects wet state (rain/water/puddles) and automatically swaps specified textures to their wet versions, reverting when dry.
 
+> **Note: You need to prepare your own wet effect textures.** For rain normal maps etc., free generic textures can be found at [ambientcg.com](https://ambientcg.com). Blend them with your original textures to create the wet version. Search for tutorials on video platforms.
+
 ## Features
 
 - Auto-switches to wet textures when raining
